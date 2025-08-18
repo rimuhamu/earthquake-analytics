@@ -1,0 +1,21 @@
+services:
+  cassandra:
+    image: cassandra:latest
+    ports:
+      - "9042:9042"
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+  kafka:
+    image: apache/kafka:latest
+    ports:
+      - "9092:9092"
+  app:
+    build: .
+    depends_on:
+      - cassandra
+      - mongo
+      - kafka
+    environment:
+      - CASSANDRA_CONTACT_POINTS=cassandra
